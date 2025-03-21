@@ -37,3 +37,44 @@
 (define-constant FRIENDSHIP_PENDING u0)
 (define-constant FRIENDSHIP_ACTIVE u1)
 (define-constant FRIENDSHIP_BLOCKED u2)
+
+;; Rate Limiting Constants
+(define-constant MAX_ACTIONS_PER_DAY u100)
+(define-constant MAX_FRIEND_REQUESTS_PER_DAY u20)
+(define-constant MAX_STATUS_UPDATES_PER_DAY u24)
+(define-constant RATE_LIMIT_RESET_PERIOD u86400) ;; 24 hours in seconds
+
+;; Batch Processing Constants
+(define-constant MIN_BATCH_SIZE u10)
+(define-constant MAX_BATCH_SIZE u100)
+(define-constant BATCH_EXPIRY_PERIOD u3600) ;; 1 hour in seconds
+
+;; Data Maps
+
+;; Users map - Core user data storage
+(define-map Users 
+    principal 
+    {
+        name: (string-ascii 64),
+        status: uint,
+        timestamp: uint,
+        metadata: (optional (string-utf8 256)),
+        deactivation-time: (optional uint),
+        encryption-key: (optional (buff 32)),
+        profile-image: (optional (string-utf8 256))
+    }
+)
+
+;; UserPrivacy map - Privacy settings storage
+(define-map UserPrivacy
+    principal
+    {
+        friend-list-visible: bool,
+        status-visible: bool,
+        metadata-visible: bool,
+        last-seen-visible: bool,
+        profile-image-visible: bool,
+        encryption-enabled: bool,
+        last-updated: uint
+    }
+)
