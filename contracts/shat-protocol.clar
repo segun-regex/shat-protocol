@@ -78,3 +78,48 @@
         last-updated: uint
     }
 )
+
+;; RateLimits map - Rate limiting data
+(define-map RateLimits
+    principal
+    {
+        daily-actions: uint,
+        friend-requests: uint,
+        status-updates: uint,
+        last-reset: uint
+    }
+)
+
+;; UserBatches map - Batch processing management
+(define-map UserBatches
+    principal
+    {
+        message-counter: uint,
+        last-batch-timestamp: uint,
+        batch-size: uint,
+        current-batch-items: uint,
+        total-batches: uint
+    }
+)
+
+;; UserActivity map - User activity tracking
+(define-map UserActivity
+    principal
+    {
+        last-seen: uint,
+        login-count: uint,
+        total-actions: uint,
+        last-action: uint
+    }
+)
+
+;; Friendships map - Relationship management
+(define-map Friendships
+    {
+        user1: principal,
+        user2: principal
+    }
+    {
+        status: uint
+    }
+)
